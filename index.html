@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yiwen (Jacqueline) Chen</title>
+    <style>
+:root {
+  --page: #f7f7f5;
+  --ink: #101010;
+  --muted: #686868;
+  --rule: #202020;
+  --slot: #f0f0ee;
+  --slot-line: #c7c7c2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 220px;
+  height: 100vh;
+  padding: 60px 28px;
+  background: rgba(247, 247, 245, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.site-name {
+  display: inline-block;
+  margin-bottom: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.nav-links,
+.contact-links {
+  display: grid;
+  justify-items: start;
+}
+
+.nav-links {
+  margin-bottom: 28px;
+}
+
+.contact-links {
+  margin-bottom: 22px;
+}
+
+.contact-links a {
+  word-break: break-word;
+}
+
+.nav-links a[aria-current],
+.contact-links a[aria-current] {
+  text-decoration-thickness: 2px;
+}
+
+.mask-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  filter: grayscale(1);
+}
+
+.mask-button[aria-pressed="true"] {
+  outline: 1px solid var(--rule);
+  outline-offset: 4px;
+}
+
+main {
+  width: min(1120px, calc(100% - 260px));
+  margin-left: 260px;
+  padding: 56px 36px 90px 0;
+}
+
+.section-panel {
+  border-top: 1px solid var(--rule);
+  padding: 28px 0 54px;
+}
+
+.section-panel:first-child {
+  border-top: 0;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 54px;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 0;
+}
+
+.kicker {
+  max-width: 520px;
+  margin: 0 0 28px;
+  color: var(--muted);
+}
+
+.summary {
+  max-width: 560px;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.hero-photo {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+
+/* full-width section + subsection headers (so project media aligns
+   with its own credit row, not with the section header) */
+.section-title {
+  margin: 0 0 30px;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.subhead {
+  margin: 0 0 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* one project/credit = text on the left aligned with its media on the right */
+.project-row,
+.credit-row {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 60px;
+  align-items: start;
+}
+
+.project-row + .project-row {
+  margin-top: 56px;
+}
+
+.credit-row + .credit-row {
+  margin-top: 30px;
+}
+
+.subsection + .subsection {
+  margin-top: 52px;
+}
+
+.title,
+.date,
+p {
+  margin: 0 0 12px;
+}
+
+.credit {
+  margin-bottom: 0;
+}
+
+.title {
+  font-style: italic;
+}
+
+.date {
+  color: var(--muted);
+}
+
+.role {
+  margin: 14px 0 0;
+}
+
+.credit-list {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.credit-list .cl-label {
+  display: block;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.credit-list strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.link-out {
+  display: inline-block;
+  margin-top: 2px;
+}
+
+ul {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+li::before {
+  content: "-> ";
+}
+
+.project-media {
+  min-width: 0;
+}
+
+/* No-crop justified galleries: each frame fits the image's real ratio.
+   Within a row, items share equal height; widths are distributed by
+   each image's aspect ratio (flex-grow). height:auto = never cropped. */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.row > figure,
+.row > .stack {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.frame {
+  margin: 0;
+}
+
+.frame img,
+.frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--slot-line);
+  background: var(--slot);
+}
+
+.solo {
+  margin: 0;
+}
+
+.solo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--slot-line);
+  background: var(--slot);
+}
+
+.media-group + .media-group {
+  margin-top: 14px;
+}
+
+figcaption {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+  text-transform: lowercase;
+}
+
+/* placeholder (hero only) */
+.photo-slot {
+  display: grid;
+  min-height: 210px;
+  place-items: center;
+  border: 1px solid var(--slot-line);
+  background:
+    linear-gradient(135deg, transparent 49.7%, var(--slot-line) 50%, transparent 50.3%),
+    linear-gradient(45deg, transparent 49.7%, var(--slot-line) 50%, transparent 50.3%),
+    var(--slot);
+  color: var(--muted);
+  text-transform: lowercase;
+}
+
+.photo-slot span {
+  padding: 8px 10px;
+  background: rgba(247, 247, 245, 0.86);
+  text-align: center;
+}
+
+.resume-panel {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 60px;
+  min-height: 460px;
+}
+
+.skills-list {
+  columns: 2;
+  column-gap: 42px;
+}
+
+.skills-list p {
+  break-inside: avoid;
+  margin-bottom: 18px;
+}
+
+/* second page toggled by the mask button: full-screen photo with text on it */
+#gallery-page {
+  display: none;
+}
+
+body.gallery-view {
+  overflow: hidden;
+}
+
+body.gallery-view main {
+  display: none;
+}
+
+body.gallery-view #gallery-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  margin-left: 260px;
+  padding: 24px;
+  z-index: 5;
+}
+
+.gallery-panel {
+  position: relative;
+  width: min(780px, 92%);
+}
+
+/* show the photo at its real (wide) ratio - never cropped */
+.gallery-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 20px 38px;
+  color: #141414;
+  font-weight: 700;
+  font-size: clamp(17px, 2.1vw, 28px);
+  line-height: 1.34;
+  text-shadow: 0 1px 14px rgba(247, 247, 245, 0.5);
+}
+
+.gallery-overlay p {
+  margin: 0 0 1.05em;
+}
+
+.gallery-overlay p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 820px) {
+  body {
+    font-size: 13px;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-name {
+    margin: 0;
+  }
+
+  .nav-links,
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    grid-column: 1 / -1;
+  }
+
+  .mask-button {
+    justify-self: end;
+  }
+
+  main {
+    width: 100%;
+    margin: 0;
+    padding: 22px 18px 70px;
+  }
+
+  body.gallery-view #gallery-page {
+    margin-left: 0;
+    padding: 18px;
+  }
+
+  .gallery-overlay {
+    padding: 18px 22px;
+    font-size: clamp(16px, 4.6vw, 24px);
+  }
+
+  .section-panel {
+    padding: 26px 0 44px;
+  }
+
+  .hero,
+  .project-row,
+  .credit-row,
+  .resume-panel {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .project-row + .project-row {
+    margin-top: 40px;
+  }
+
+  .hero-photo {
+    min-height: 360px;
+  }
+
+  .project-media:empty {
+    display: none;
+  }
+
+  .skills-list {
+    columns: 1;
+  }
+}
+
+/* On phones, stack each row's images full-width so nothing gets tiny. */
+@media (max-width: 640px) {
+  .row {
+    display: block;
+  }
+
+  .row > figure,
+  .row > .stack {
+    margin-bottom: 8px;
+  }
+}
+
+</style>
+  </head>
+  <body>
+    <aside class="sidebar" aria-label="Site navigation">
+      <a class="site-name" href="#top">YIWEN (JACQUELINE)<br>CHEN</a>
+      <nav class="nav-links">
+        <a href="#event-marketing">Event &amp; Marketing</a>
+        <a href="#research">Research</a>
+        <a href="#creative">Creative Work</a>
+      </nav>
+      <nav class="contact-links">
+        <a href="mailto:jacq.cyw1114@gmail.com">jacq.cyw1114@gmail.com</a>
+        <a href="#resume">About</a>
+      </nav>
+      <button class="mask-button" id="page-toggle" type="button" aria-label="Open gallery page" aria-pressed="false">&#x1F3AD;</button>
+    </aside>
+
+    <main id="top">
+      <section class="hero section-panel">
+        <div class="hero-photo">
+          <img src="assets/frontpage-cut.png" alt="Climber reaching across a bouldering wall">
+        </div>
+        <div class="hero-copy">
+          <p class="kicker">Arts &amp; Entertainment Marketing / Live Event Production / Content Strategy</p>
+          <p class="summary">
+            Bilingual arts and entertainment marketer and producer based in New York. Yiwen works across live events, theatre, media research, and audience engagement, bringing creative production together with market analysis.
+          </p>
+        </div>
+      </section>
+
+      <section id="event-marketing" class="section-panel">
+        <h2 class="section-title">Event &amp; Marketing</h2>
+
+        <div class="project-row">
+          <div class="project-text">
+            <p class="title">Les Mis&eacute;rables 40th Anniversary World Tour</p>
+            <p>Shanghai Media Group &middot; Marketing Intern</p>
+            <p>Shanghai, China</p>
+            <p class="date">Jun 2025 - Aug 2025</p>
+            <ul>
+              <li>Curated and operated the 40th Anniversary exhibition and pop-up store for on-site audience engagement and event logistics.</li>
+              <li>Edited bilingual marketing materials, audience guides, and concert subtitles; campaign content reached 120K+ views.</li>
+              <li>Designed and ran the "Little Cosette" casting application (400+ applicants); wrote promo scripts and supported merchandise development with vendors.</li>
+            </ul>
+          </div>
+          <div class="project-media">
+            <div class="media-group gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.517"><img src="assets/exhi3.jpg" alt="40th Anniversary exhibition"></figure>
+                <figure class="frame" style="flex-grow:1.047"><img src="assets/exhi1.jpg" alt="40th Anniversary exhibition"></figure>
+              </div>
+              <figcaption>exhibition</figcaption>
+            </div>
+            <div class="media-group gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:0.75"><img src="assets/partner1.jpg" alt="Pop-up and bakery partnership"></figure>
+                <figure class="frame" style="flex-grow:0.75"><img src="assets/partner2.jpg" alt="Pop-up and bakery partnership"></figure>
+                <figure class="frame" style="flex-grow:0.75"><img src="assets/partner3.jpg" alt="Pop-up and bakery partnership"></figure>
+              </div>
+              <figcaption>pop-up &amp; bakery partnership</figcaption>
+            </div>
+            <div class="media-group gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.93"><img src="assets/merch-development.jpg" alt="Merchandise development"><figcaption>merch development</figcaption></figure>
+                <figure class="frame" style="flex-grow:1.33"><img src="assets/bilingual-guide.jpg" alt="Bilingual exhibition guide"><figcaption>bilingual guide</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-row">
+          <div class="project-text">
+            <p class="title">Independent Concert</p>
+            <p>Marketing &amp; Executive Producer</p>
+            <p>New York, NY</p>
+            <p class="date">Feb 2025 - Apr 2025</p>
+            <ul>
+              <li>Produced and marketed an independent live concert in Manhattan's East Village, owning budgeting, venue negotiation, and artist partnerships.</li>
+              <li>Established revenue-sharing agreements with 4 independent acts while controlling costs through venue negotiation.</li>
+              <li>Built integrated online/offline marketing for local audiences and directed artist interviews, behind-the-scenes content, and on-site videography.</li>
+            </ul>
+          </div>
+          <div class="project-media gallery">
+            <div class="row">
+              <div class="stack" style="flex-grow:0.71">
+                <figure class="frame"><img src="assets/live2.jpg" alt="Live concert performance"></figure>
+                <figure class="frame"><img src="assets/live4.jpg" alt="Live concert performance"></figure>
+                <figcaption>live show</figcaption>
+              </div>
+              <figure class="frame" style="flex-grow:0.68"><img src="assets/artists-poster.jpg" alt="Self-designed lineup poster"><figcaption>self-designed lineup poster</figcaption></figure>
+            </div>
+            <div class="row">
+              <figure class="frame" style="flex-grow:2.121"><img src="assets/venue-cropped.jpg" alt="Concert venue, Bowery Electric"><figcaption style="text-transform:none">venue: Bowery Electric</figcaption></figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="research" class="section-panel">
+        <h2 class="section-title">Research</h2>
+
+        <div class="project-row">
+          <div class="project-text">
+            <p class="title">Content Development</p>
+            <p>Shanghai Media Group &middot; Content Development Intern</p>
+            <p>Shanghai, China</p>
+            <p class="date">Jun 2024 - Aug 2024</p>
+            <ul>
+              <li>Produced a 20-page industry research report analyzing 10+ variety shows and documentaries.</li>
+              <li>Built a database of 200+ global programs across Asia, Europe, and North America.</li>
+              <li>Researched short-form drama trends on TikTok and YouTube Shorts; delivered 6 data-visualization briefings on cross-cultural storytelling and localization.</li>
+            </ul>
+          </div>
+          <div class="project-media"></div>
+        </div>
+
+        <div class="project-row">
+          <div class="project-text">
+            <p class="title">NYU Verbatim Performance Lab</p>
+            <p>Marketing Intern &middot; Dramaturgical Research</p>
+            <p>New York, NY</p>
+            <p class="date">Jan 2024 - May 2024</p>
+            <ul>
+              <li>Drove social media promotion for experimental theatre productions and supported live-performance backstage operations.</li>
+              <li>Conducted dramaturgical research on Brecht's Verfremdungseffekt and archival records, translating insights into scripting and staging references.</li>
+            </ul>
+            <a class="link-out" href="https://wp.nyu.edu/verbatimperformancelab/bertolt-brecht-and-21-st-century-verfremdung/" target="_blank" rel="noopener">Read: Brecht &amp; 21st-Century Verfremdung -&gt;</a>
+          </div>
+          <div class="project-media"></div>
+        </div>
+      </section>
+
+      <section id="creative" class="section-panel">
+        <h2 class="section-title">Creative Work</h2>
+
+        <div class="subsection">
+          <p class="subhead">Theatre</p>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">37 Scenes and a Watermelon</p>
+                <p>Co-Director &middot; NYU 10-Minute Play Festival</p>
+                <p class="date">New York, NY &middot; Apr 2026</p>
+              </div>
+            </div>
+            <div class="project-media gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:0.808"><img src="assets/watermelon2.jpg" alt="37 Scenes and a Watermelon, blue-lit scene"></figure>
+                <figure class="frame" style="flex-grow:1.415"><img src="assets/watermelon1.jpg" alt="37 Scenes and a Watermelon, opening scene"></figure>
+                <figure class="frame" style="flex-grow:0.79"><img src="assets/watermelon3.jpg" alt="37 Scenes and a Watermelon, table scene"></figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">Shanghai Theatre Academy</p>
+                <p>Production Assistant</p>
+                <p class="date">Shanghai, China &middot; Jun 2024 - Aug 2024</p>
+                <ul>
+                  <li>Coordinated rehearsal schedules, call sheets, venue logistics, and contracts for a 20+ performer stage production.</li>
+                  <li>Managed production budgeting and reimbursements; reduced costs through comparative sourcing of props and costumes.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-media"></div>
+          </div>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">CO/LAB Theatre Group</p>
+                <p>Volunteer / Supporting Artist</p>
+                <p class="date">New York, NY &middot; Feb 2024 - May 2024</p>
+                <ul>
+                  <li>Facilitated drama exercises and one-on-one support for performers with developmental disabilities.</li>
+                  <li>Led assistant-artist meetings and documented participant progress.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-media"></div>
+          </div>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">Stagecraft &amp; Scale Models</p>
+                <p>Personal practice</p>
+              </div>
+            </div>
+            <div class="project-media gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:0.94"><img src="assets/stagecraft.png" alt="Stage craft work"><figcaption>stage craft</figcaption></figure>
+                <figure class="frame" style="flex-grow:1.33"><img src="assets/set-model.jpg" alt="Set model"><figcaption>set model</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <p class="subhead">Short Film</p>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">Echoes of Creation</p>
+                <p class="date">Mar 2024</p>
+                <p class="role">Role: Art Director &middot; Hair &amp; Makeup</p>
+                <div class="credit-list">
+                  <span class="cl-label">Credit List</span>
+                  Director: Tess Yan<br>
+                  Screen Writer: Tess Yan<br>
+                  Producer: Eden Ballantyne, Judy Li<br>
+                  Assistant Director: Quer Wei, Ling Shi<br>
+                  Director of Photography: Sam Lu<br>
+                  Sound Team: Riel Lewis, Lulu Chen<br>
+                  Art Team: <strong>Yiwen Chen</strong>, Sylvia Breaux<br>
+                  Gaffer: Pedro, Milan Szatmari, Andrew Kim<br>
+                  GNE: Eva Xiang, Sam Hu<br>
+                  Editor: Tess Yan<br>
+                  1st AC: Junfan Li, David Choi<br>
+                  2nd AC: Jiawen Wang, Alen Zhang<br>
+                  Cast: Justin Viz, Define Ozkan, Raj, Aniela
+                </div>
+              </div>
+            </div>
+            <div class="project-media gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.67"><img src="assets/eoc1.jpg" alt="Echoes of Creation still 1"></figure>
+                <figure class="frame" style="flex-grow:1.67"><img src="assets/eoc2.jpg" alt="Echoes of Creation still 2"></figure>
+              </div>
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.67"><img src="assets/eoc3.jpg" alt="Echoes of Creation still 3"></figure>
+                <figure class="frame" style="flex-grow:1.67"><img src="assets/eoc4.jpg" alt="Echoes of Creation still 4"></figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">Celestial Tides</p>
+                <p class="date">Feb 2024</p>
+                <p class="role">Role: Art &middot; Makeup</p>
+                <div class="credit-list">
+                  <span class="cl-label">Credit List</span>
+                  Director: Tess Yan<br>
+                  Screen Writer: Tess Yan<br>
+                  Assistant Director: Youning Jiang<br>
+                  Script Supervisor: Youning Jiang<br>
+                  Gaffer: Asriel Zhang, Joe Lee<br>
+                  Makeup &amp; Art: <strong>Yiwen Chen</strong><br>
+                  Director of Photography: Tess Yan<br>
+                  Editor: Tess Yan<br>
+                  Cast: Celeste Wolf, Jane Murdoch
+                </div>
+              </div>
+            </div>
+            <div class="project-media gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.78"><video src="assets/celestial-clean.mp4" autoplay muted loop playsinline preload="auto"></video><figcaption>motion</figcaption></figure>
+                <figure class="frame" style="flex-grow:1.78"><img src="assets/celestial-tides1.jpg" alt="Celestial Tides still"><figcaption>still</figcaption></figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">Backwards</p>
+                <p class="date">Nov 2022</p>
+                <p class="role">Role: Makeup &middot; Script Supervisor</p>
+                <div class="credit-list">
+                  <span class="cl-label">Credit List</span>
+                  Director: Tess Yan<br>
+                  Screen Writer: Tess Yan<br>
+                  Script Supervisor: <strong>Yiwen Chen</strong><br>
+                  Makeup: <strong>Yiwen Chen</strong><br>
+                  Gaffer: Alice Zhou, Asriel Zhang<br>
+                  Director of Photography: Tess Yan<br>
+                  Editor: Tess Yan<br>
+                  Cast: Asriel Zhang, Serena Zhang
+                </div>
+              </div>
+            </div>
+            <div class="project-media gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.78"><img src="assets/backwards1.jpg" alt="Backwards still 1"></figure>
+                <figure class="frame" style="flex-grow:1.78"><img src="assets/backwards2.jpg" alt="Backwards still 2"></figure>
+              </div>
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.78"><img src="assets/backwards3.jpg" alt="Backwards still 3"></figure>
+                <figure class="frame" style="flex-grow:1.777"><img src="assets/backwards4.jpg" alt="Backwards still 4"></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <p class="subhead">Fashion</p>
+          <div class="credit-row">
+            <div class="project-text">
+              <div class="credit">
+                <p class="title">Phos_Monia SS26 RTW</p>
+                <p>Atelier &amp; Production Assistant</p>
+                <p>Assisted with garment construction in the atelier and supported on-set coordination during the SS26 ready-to-wear shoot.</p>
+                <div class="credit-list">
+                  <span class="cl-label">Credit List</span>
+                  Production: Phos_Monia Fashion Studio<br>
+                  Wardrobe: Xinna Hong<br>
+                  Photographer: Hui Long<br>
+                  Art Director: Fan Yu<br>
+                  Model: Katherine Wei, HsiaoWei Hsiang<br>
+                  HMU: Ziyi Tang<br>
+                  Assistant: Liz Li, <strong>Yiwen Chen</strong>
+                </div>
+              </div>
+            </div>
+            <div class="project-media gallery">
+              <div class="row">
+                <figure class="frame" style="flex-grow:0.667"><img src="assets/assis2.jpg" alt="Phos_Monia SS26 editorial"></figure>
+                <figure class="frame" style="flex-grow:0.666"><img src="assets/assis3.jpg" alt="Phos_Monia SS26 shoot day"></figure>
+                <figure class="frame" style="flex-grow:0.75"><img src="assets/assistant.jpg" alt="Phos_Monia SS26 RTW lookbook"><figcaption>ss26 lookbook</figcaption></figure>
+              </div>
+              <div class="row">
+                <figure class="frame" style="flex-grow:1.78"><img src="assets/assis1.jpg" alt="Phos_Monia SS26 shoot"><figcaption>ss26 shoot</figcaption></figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="resume" class="section-panel resume-panel">
+        <div>
+          <h2 class="section-title"><a href="assets/Yiwen_Chen_Resume.pdf" target="_blank" rel="noopener">Resume &#8599;</a></h2>
+          <p class="title">New York University</p>
+          <p>B.S. Educational Theatre &amp; B.A. Economics</p>
+          <p class="date">2022 - 2026</p>
+        </div>
+        <div class="skills-list">
+          <p>Integrated Campaigns / Social Media / Content Strategy / Experiential Marketing / Bilingual Copywriting / Audience Engagement</p>
+          <p>Live Event Production / Budgeting / Vendor &amp; Artist Negotiation / Scheduling &amp; Logistics / On-Site Operations</p>
+          <p>Competitive Analysis / Market &amp; Audience Research / Data Visualization / Industry Reporting</p>
+          <p>Adobe Photoshop / Procreate / CapCut / Excel / PowerPoint / Canva / LaTeX</p>
+          <p>Chinese Native / English Fluent / Japanese Elementary / Spanish Elementary</p>
+        </div>
+      </section>
+    </main>
+
+    <section id="gallery-page" aria-label="Gallery">
+      <div class="gallery-panel">
+        <img class="gallery-bg" src="assets/gallery-photo.jpg" alt="">
+        <div class="gallery-overlay">
+          <p>idealist.</p>
+          <p>interested in beautiful systems,<br>
+            carefully made things,<br>
+            and moments that refuse to disappear.</p>
+          <p>currently archiving:<br>
+            fragments,<br>
+            connections,<br>
+            small certainties.</p>
+          <p>everything else is still loading&hellip;</p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+const sections = [...document.querySelectorAll("main section[id]")];
+const navLinks = [...document.querySelectorAll(".nav-links a")];
+
+const observer = new IntersectionObserver(
+  entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (!visible) return;
+
+    navLinks.forEach(link => {
+      const isActive = link.getAttribute("href") === `#${visible.target.id}`;
+      link.toggleAttribute("aria-current", isActive);
+    });
+  },
+  { rootMargin: "-35% 0px -45% 0px", threshold: [0.1, 0.3, 0.6] }
+);
+
+sections.forEach(section => observer.observe(section));
+
+// Mask button toggles a separate gallery page.
+const pageToggle = document.getElementById("page-toggle");
+pageToggle.addEventListener("click", () => {
+  const on = document.body.classList.toggle("gallery-view");
+  pageToggle.setAttribute("aria-pressed", String(on));
+  pageToggle.setAttribute("aria-label", on ? "Back to main page" : "Open gallery page");
+  window.scrollTo(0, 0);
+});
+
+// Any sidebar nav / home link returns to the main page.
+document.querySelectorAll(".nav-links a, .contact-links a, .site-name").forEach(link => {
+  link.addEventListener("click", () => {
+    document.body.classList.remove("gallery-view");
+    pageToggle.setAttribute("aria-pressed", "false");
+    pageToggle.setAttribute("aria-label", "Open gallery page");
+  });
+});
+
+</script>
+  </body>
+</html>
