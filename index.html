@@ -77,6 +77,11 @@ a {
   word-break: break-word;
 }
 
+.nav-links a:not([aria-current]),
+.contact-links a:not([aria-current]) {
+  text-decoration-thickness: 1px !important;
+}
+
 .nav-links a[aria-current],
 .contact-links a[aria-current] {
   text-decoration-thickness: 2px;
@@ -647,10 +652,10 @@ body.gallery-view #gallery-page {
             <div class="project-media gallery">
               <div class="row">
                 <figure class="frame" style="flex-grow:0.808"><img src="assets/watermelon2.jpg" alt="37 Scenes and a Watermelon, blue-lit scene"></figure>
-                <figure class="frame" style="flex-grow:1.415"><img src="assets/watermelon-new.jpg" alt="37 Scenes and a Watermelon, project poster"></figure>
+                <figure class="frame" style="flex-grow:0.732"><img src="assets/watermelon-new.jpg" alt="37 Scenes and a Watermelon, project poster"></figure>
                 <figure class="frame" style="flex-grow:0.79"><img src="assets/watermelon3.jpg" alt="37 Scenes and a Watermelon, table scene"></figure>
               </div>
-              <a class="link-out" href="assets/YE_Program_2026.pdf" target="_blank" rel="noopener">Project Proposal →</a>
+              <a class="link-out" href="assets/YE_Program_2026.pdf" target="_blank" rel="noopener">YE Program 2026.pdf →</a>
             </div>
           </div>
 
