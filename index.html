@@ -619,9 +619,10 @@ body.gallery-view #gallery-page {
               <li>Drove social media promotion for experimental theatre productions and supported live-performance backstage operations.</li>
               <li>Conducted dramaturgical research on Brecht's Verfremdungseffekt and archival records, translating insights into scripting and staging references.</li>
             </ul>
+          </div>
+          <div class="project-media">
             <a class="link-out" href="https://wp.nyu.edu/verbatimperformancelab/bertolt-brecht-and-21-st-century-verfremdung/" target="_blank" rel="noopener">Read: Brecht &amp; 21st-Century Verfremdung -&gt;</a>
           </div>
-          <div class="project-media"></div>
         </div>
       </section>
 
@@ -637,14 +638,19 @@ body.gallery-view #gallery-page {
                 <p class="title">37 Scenes and a Watermelon</p>
                 <p>Co-Director &middot; NYU 10-Minute Play Festival</p>
                 <p class="date">New York, NY &middot; Apr 2026</p>
+                <div class="credit-list">
+                  <p><span class="cl-label">Director:</span> Camila Herrera, Yiwen Chen</p>
+                  <p><span class="cl-label">Cast:</span> Keira, Noa Quinones</p>
+                </div>
               </div>
             </div>
             <div class="project-media gallery">
               <div class="row">
                 <figure class="frame" style="flex-grow:0.808"><img src="assets/watermelon2.jpg" alt="37 Scenes and a Watermelon, blue-lit scene"></figure>
-                <figure class="frame" style="flex-grow:1.415"><img src="assets/watermelon1.jpg" alt="37 Scenes and a Watermelon, opening scene"></figure>
+                <figure class="frame" style="flex-grow:1.415"><img src="assets/watermelon-new.jpg" alt="37 Scenes and a Watermelon, project poster"></figure>
                 <figure class="frame" style="flex-grow:0.79"><img src="assets/watermelon3.jpg" alt="37 Scenes and a Watermelon, table scene"></figure>
               </div>
+              <a class="link-out" href="assets/YE_Program_2026.pdf" target="_blank" rel="noopener">Project Proposal →</a>
             </div>
           </div>
 
@@ -875,7 +881,11 @@ const observer = new IntersectionObserver(
 
     navLinks.forEach(link => {
       const isActive = link.getAttribute("href") === `#${visible.target.id}`;
-      link.toggleAttribute("aria-current", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
   },
   { rootMargin: "-35% 0px -45% 0px", threshold: [0.1, 0.3, 0.6] }
