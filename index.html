@@ -655,7 +655,7 @@ body.gallery-view #gallery-page {
                 <figure class="frame" style="flex-grow:0.732"><img src="assets/watermelon-new.jpg" alt="37 Scenes and a Watermelon, project poster"></figure>
                 <figure class="frame" style="flex-grow:0.79"><img src="assets/watermelon3.jpg" alt="37 Scenes and a Watermelon, table scene"></figure>
               </div>
-              <a class="link-out" href="assets/YE_Program_2026.pdf" target="_blank" rel="noopener">YE Program 2026.pdf →</a>
+              <a class="link-out" href="assets/YE_Program_2026.pdf" target="_blank" rel="noopener">YE Program 2026 →</a>
             </div>
           </div>
 
@@ -910,6 +910,13 @@ pageToggle.addEventListener("click", () => {
 // Any sidebar nav / home link returns to the main page.
 document.querySelectorAll(".nav-links a, .contact-links a, .site-name").forEach(link => {
   link.addEventListener("click", () => {
+    // If this is a nav link, immediately update aria-current on all nav links
+    if (link.classList.contains("nav-links") || link.parentElement.classList.contains("nav-links")) {
+      navLinks.forEach(l => l.removeAttribute("aria-current"));
+      if (link.href.includes("#")) {
+        link.setAttribute("aria-current", "page");
+      }
+    }
     document.body.classList.remove("gallery-view");
     pageToggle.setAttribute("aria-pressed", "false");
     pageToggle.setAttribute("aria-label", "Open gallery page");
