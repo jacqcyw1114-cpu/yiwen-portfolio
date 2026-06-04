@@ -874,30 +874,7 @@ body.gallery-view #gallery-page {
     </section>
 
     <script>
-const sections = [...document.querySelectorAll("main section[id]")];
 const navLinks = [...document.querySelectorAll(".nav-links a")];
-
-const observer = new IntersectionObserver(
-  entries => {
-    const visible = entries
-      .filter(entry => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-    if (!visible) return;
-
-    navLinks.forEach(link => {
-      const isActive = link.getAttribute("href") === `#${visible.target.id}`;
-      if (isActive) {
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.removeAttribute("aria-current");
-      }
-    });
-  },
-  { rootMargin: "-35% 0px -45% 0px", threshold: [0.1, 0.3, 0.6] }
-);
-
-sections.forEach(section => observer.observe(section));
 
 // Mask button toggles a separate gallery page.
 const pageToggle = document.getElementById("page-toggle");
