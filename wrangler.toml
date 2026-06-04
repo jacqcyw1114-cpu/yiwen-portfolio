@@ -1,0 +1,7 @@
+name = "yiwen-portfolio"
+compatibility_date = "2024-11-01"
+
+# Static site: serve everything in the repo root as static assets,
+# no Worker script needed (assets-only deployment).
+[assets]
+directory = "."
